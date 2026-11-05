@@ -79,6 +79,6 @@ In this workshop, you’ll load JSON data, transform it into tables and clean it
 
 - [Microsoft Learn - Workspaces in Microsoft Fabric and Power BI](https://learn.microsoft.com/en-us/fabric/fundamentals/workspaces?wt.mc_id=DX-MVP-5003563)
 
-- [Microsoft Learn - Task flows in Microsoft Fabric](https://learn.microsoft.com/en-us/fabric/fundamentals/task-flow-overview)
+- [Microsoft Learn - Task flows in Microsoft Fabric](https://learn.microsoft.com/en-us/fabric/fundamentals/task-flow-overview?wt.mc_id=DX-MVP-5003563)
 
-- [Microsoft Learn - Roles in workspaces in Microsoft Fabric](https://learn.microsoft.com/en-us/fabric/fundamentals/roles-workspaces)
+- [Microsoft Learn - Roles in workspaces in Microsoft Fabric](https://learn.microsoft.com/en-us/fabric/fundamentals/roles-workspaces?wt.mc_id=DX-MVP-5003563)
