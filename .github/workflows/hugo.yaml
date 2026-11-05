@@ -70,9 +70,9 @@ jobs:
         run: |
           authorization="$(printf 'x-access-token:%s' "$SHARED_MODULE_TOKEN" | base64 -w 0)"
           echo "::add-mask::$authorization"
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0="http.https://github.com/HatFullOfData/hatfullofdata-hugo-shared.extraheader"
-          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $authorization"
+          credential_key="http.https://github.com/HatFullOfData/.extraheader"
+          trap 'git config --global --unset-all "$credential_key"' EXIT
+          git config --global "$credential_key" "AUTHORIZATION: basic $authorization"
           hugo --environment production --gc --minify --baseURL "${PAGES_BASE_URL%/}/"
 
       - name: Upload Pages artifact

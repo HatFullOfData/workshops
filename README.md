@@ -102,8 +102,11 @@ The workflow gets the base URL from GitHub Pages, including the project path
 (`/workshops/`) or an existing custom domain. Local configuration remains at
 `http://localhost:1313/`; no deployment URL is hard-coded into local development.
 The workflow grants Pages write and OIDC permissions only to the deploy job,
-and does not persist the private module credential in Git configuration or
-include source/module caches in the uploaded site artifact.
+and temporarily configures a masked Git authentication header for the
+`HatFullOfData` owner on the disposable runner. The header is removed when the
+build step exits, including on failure. This uses Git configuration because
+Hugo's subprocess environment allowlist excludes `GIT_CONFIG_*` variables.
+Source/module caches are not included in the uploaded site artifact.
 
 Changes made only in the sibling shared checkout will not be deployed. Commit
 and push them in the shared repository, update the shared module version here,
