@@ -1,0 +1,25 @@
+baseURL = "http://localhost:1313/"
+locale = "en-gb"
+defaultContentLanguage = "en"
+title = "Hat Full of Data Workshops"
+
+[params]
+    mainSections = ["workshops"]
+    favicon = "img/favicon.png"
+
+    [params.sidebar]
+        subtitle = "Public conference workshops from Hat Full of Data."
+        avatar = "img/logo.png"
+
+    [params.colorScheme]
+        toggle = true
+        default = "auto"
+
+    [params.comments]
+        enabled = false
+
+    [params.article]
+        toc = true
+
+    [params.widgets]
+        page = [{ type = "toc" }]

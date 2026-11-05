@@ -1,0 +1,25 @@
+{{ define "main" }}
+    {{ with .Content }}
+        <section class="article-list">
+            <article>
+                <div class="article-content">
+                    {{ . }}
+                </div>
+            </article>
+        </section>
+    {{ end }}
+
+    <section class="article-list" aria-label="Workshops">
+        {{ with .Site.GetPage "/workshops" }}
+            {{ range .Sections.ByWeight }}
+                {{ partial "article-list/default" . }}
+            {{ end }}
+        {{ end }}
+    </section>
+
+    {{ partial "footer/footer" . }}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}

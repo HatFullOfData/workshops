@@ -1,0 +1,14 @@
+[[main]]
+    identifier = "home"
+    name = "Home"
+    pageRef = "/"
+    weight = 10
+
+[[main]]
+    identifier = "fabric-introduction"
+    name = "Fabric Introduction"
+    pageRef = "/workshops/fabric-introduction"
+    weight = 30
+
+    [main.params]
+        expandSection = true

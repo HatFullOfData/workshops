@@ -1,0 +1,5 @@
+[[imports]]
+    path = "github.com/HatFullOfData/hatfullofdata-hugo-shared"
+
+[[imports]]
+    path = "github.com/CaiJimmy/hugo-theme-stack/v4"
