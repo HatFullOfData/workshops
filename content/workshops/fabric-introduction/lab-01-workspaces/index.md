@@ -53,7 +53,7 @@ Task flows help you organise the items in your workspace into logical steps, suc
 
 ![The steps to create Get data and Store data tasks](<create task flow.png>)
 
-### Editing Tasks
+## Editing Tasks
 
 Task titles and descriptions can be edited to distinguish similar tasks and reflect your data process.
 
