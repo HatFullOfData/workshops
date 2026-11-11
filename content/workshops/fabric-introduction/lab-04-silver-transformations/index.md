@@ -1,5 +1,5 @@
 +++
-title = "Lab 4: Silver Transformations with Data Wrangler"
+title = "Lab 4: Transformation with Notebook + Data Wrangler"
 weight = 40
 +++
 
@@ -59,7 +59,7 @@ Attach your lakehouse to the notebook so it can read the JSON file and write the
 
 ![Screenshots of the above instructions](<Open File.png>)
 
-Fabric adds a code cell that reads the JSON file and displays it as a table. The first run can take a few minutes while Fabric starts the processing service. The final line ```display(df)`` will put a table of the data in the output
+Fabric adds a code cell that reads the JSON file and displays it as a table. The first run can take a few minutes while Fabric starts the processing service. The final line ```display(df)``` will put a table of the data in the output
 
 ## Why Spark Instead of pandas?
 
@@ -109,7 +109,7 @@ The first fix is to remove the £ from the Base Price. There are multiple ways t
 The new Base_Price column is still text and the old Base Price column is no longer needed.
 
 > [!NOTE]Instructions
-> 1. On the new `base_price` column, open the **...** menu and choose **Change column type**. 
+> 1. On the new `Base_Price` column, open the **...** menu and choose **Change column type**. 
 > 1. In the Operations pane, select **float32** for New type.
 > 1. Click Apply.
 > 1. Open the **...** menu for the original `Base Price` column, choose **Drop columns**
@@ -123,6 +123,11 @@ The data should now have the right column names, data types and data content. It
 
 ### Load Code into the Notebook
 
+Our cleaning steps are now complete. We can now convert all the steps in Spark code. 
+
+> [!TIP]
+> You cannot edit these steps in Data Wrangler once you load the code into the notebook. You can only edit the actual code.
+
 > [!NOTE]Instructions
 > 1. Select **Add code to notebook** from the top ribbon. 
 > 1. In the Add code to notebook dialog, choose **Add**
@@ -130,6 +135,11 @@ The data should now have the right column names, data types and data content. It
 > 1. Add a markdown block above it with the contents ```## Clean up data```
 
 ![Screenshots of the above instructions](<add code.png>)
+
+> [!Caution]
+> If your session ends due to lack of activity whilst you are in Data Wrangler you will loose all the changes you made. You will get a Kernel disconnected error, that suggests a refresh, which will throw you out of data wrangler and not save the steps.
+
+![Kernel disconnected. Kernel was lost during the session, please refresh the page to reconnect.](<Wrangler Disconnect.png>)
 
 ## Exploring the Data Wrangler Code
 
@@ -153,7 +163,7 @@ Add a markdown cell with the content ```## Sort Columns```
 
 Add a code cell after the cleaning cell to give the output a consistent column order:
 
-```python
+```
 df_clean = df_clean.select(
     "Product_ID",
     "Product",
@@ -173,7 +183,7 @@ Run the cell and confirm that the displayed DataFrame contains the five columns 
 
 Add a Markdown cell with the heading `## Write data to table`, then add and run this code cell:
 
-```python
+```
 df_clean.write.format("delta").mode("overwrite").option("overwriteSchema", "true").save("Tables/dbo/products")
 ```
 
@@ -181,13 +191,25 @@ This writes the cleaned DataFrame as a Delta table in the attached lakehouse. Th
 
 Open the lakehouse and refresh **Tables** if needed. Open the `products` table and check that the cleaned columns and values are present.
 
+![The save code block and the table in the lakehouse](<save data.png>)
+
 ## Fixing Base_Price
 
+The code works, but the Base_Price is not clean. The value 3.30 has become 3.299999... This is due to the line in the clean_data function that converts the Base_Price column to a ```FloatType()```. A better choice would be to use ```DecimalType(9,2)```. Decimal(9,2) means the number can have up to 9 digits in total, with 2 of those digits after the decimal point, for example 1234567.89.
 
+The line should now read
+
+```
+df = df.withColumn('Base_Price', df['Base_Price'].cast(T.DecimalType(9,2)))
+```
+
+Re-run all the notebook and the table should now be correct.
+
+![Final table with 5 columns](final.png)
 
 ## Lab 4 Complete
 
-You should now have a `Products Silver Notebook` in your workspace and a `products` Delta table in your lakehouse. The table contains the cleaned product data, with a decimal `base_price` and columns in the intended order.
+You should now have a `Products Silver Notebook` in your workspace and a `products` Delta table in your lakehouse. The table contains the cleaned product data, with a decimal `Base_Price` and columns in the intended order.
 
 ## Useful References
 
